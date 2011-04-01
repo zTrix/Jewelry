@@ -1,0 +1,134 @@
+						-- horizental cut
+					for i in 0 to 2 loop
+						if (table(lastRow - i)(lastCol) = table(lastRow - i)(lastCol - 1)) then --x11xx
+							if (lastCol > 2 and table(lastRow - i)(lastCol) = table(lastRow - i)(lastCol - 2)) then --111xx
+								tmpTable(lastRow - i)(lastCol - 2) := '1';
+								tmpTable(lastRow - i)(lastCol - 1) := '1';
+								tmpTable(lastRow - i)(lastCol - 0) := '1';
+								if (table(lastRow - i)(lastCol + 1) = table(lastRow - i)(lastCol)) then
+									tmpTable(lastRow - i)(lastCol + 1) := '1';
+									if (lastCol < 5 and table(lastRow - i)(lastCol + 2) = table(lastRow - i)(lastCol)) then
+										tmpTable(lastRow - i)(lastCol + 2) := '1';
+									end if;
+								end if;
+								
+							
+							
+							elsif (table(lastRow - i)(lastCol + 1) = table(lastRow - i)(lastCol)) then --0111x
+								tmpTable(lastRow - i)(lastCol - 1) := '1';
+								tmpTable(lastRow - i)(lastCol) := '1';
+								tmpTable(lastRow - i)(lastCol + 1) := '1';
+								if (lastCol < 5 and table(lastRow - i)(lastCol + 2) = table(lastRow - i)(lastCol)) then
+									tmpTable(lastRow - i)(lastCol + 2) := '1';
+								end if;
+							end if;
+						elsif (table(lastRow - i)(lastCol) = table(lastRow - i)(lastCol+1)) then --0011x
+						
+							if (table(lastRow - i)(lastCol) = table(lastRow - i)(lastCol+2)) then --00111
+								tmpTable(lastRow - i)(lastCol) := '1';
+								tmpTable(lastRow - i)(lastCol+1) := '1';
+								tmpTable(lastRow - i)(lastCol+2) := '1';
+							end if;
+						
+						end if;
+					end loop;
+						
+						-- vetical cut
+					if table(lastRow - 1)(lastCol) = table(lastRow)(lastCol) then --x11xx
+						if lastRow > 2 and table(lastRow - 2)(lastCol) = table(lastRow)(lastCol) then --111xx
+							tmpTable(lastRow)(lastCol) := '1';
+							tmpTable(lastRow - 1)(lastCol) := '1';
+							tmpTable(lastRow - 2)(lastCol) := '1';
+							if table(lastRow + 1)(lastCol) = table(lastRow)(lastCol) then --1111x
+								tmpTable(lastRow + 1)(lastCol) := '1';
+								if (lastRow < 12 and table(lastRow + 2)(lastCol) = table(lastRow)(lastCol)) then --11111
+									tmpTable(lastRow + 2)(lastCol) := '1';
+								end if;
+							end if;
+						
+						
+						elsif table(lastRow + 1)(lastCol) = table(lastRow)(lastCol) then --0111x
+							tmpTable(lastRow)(lastCol) := '1';
+							tmpTable(lastRow - 1)(lastCol) := '1';
+							tmpTable(lastRow + 1)(lastCol) := '1';
+							if lastRow < 12 and table(lastRow + 2)(lastCol) = table(lastRow)(lastCol) then --01111
+								tmpTable(lastRow + 2)(lastCol) := '1';
+							end if;
+						end if;
+						
+					elsif table(lastRow)(lastCol) = table(lastRow + 1)(lastCol) then --0011x
+						if lastRow < 12 and table(lastRow+2)(lastCol) = table(lastRow)(lastCol) then --00111
+							tmpTable(lastRow)(lastCol) := '1';
+							tmpTable(lastRow + 1)(lastCol) := '1';
+							tmpTable(lastRow + 2)(lastCol) := '1';
+						end if;
+						
+					end if;
+					
+						-- diagonal cut
+					for i in 0 to 2 loop
+						-- '\' shape
+						if (lastRow-i > 1) and lastCol > 1 and table(lastRow-i - 1)(lastCol-1) = table(lastRow-i)(lastCol) then --x11xx
+							if lastRow-i > 2 and lastCol > 2 and table(lastRow-i - 2)(lastCol-2) = table(lastRow-i)(lastCol) then --111xx
+								tmpTable(lastRow-i)(lastCol) := '1';
+								tmpTable(lastRow-i - 1)(lastCol-1) := '1';
+								tmpTable(lastRow-i - 2)(lastCol-2) := '1';
+								if table(lastRow-i + 1)(lastCol+1) = table(lastRow-i)(lastCol) then --1111x
+									tmpTable(lastRow-i + 1)(lastCol+1) := '1';
+									if (lastRow-i < 12 and lastCol < 5 and table(lastRow-i + 2)(lastCol+2) = table(lastRow-i)(lastCol)) then --11111
+										tmpTable(lastRow-i + 2)(lastCol+2) := '1';
+									end if;
+								end if;
+							
+							
+							elsif table(lastRow-i + 1)(lastCol+1) = table(lastRow-i)(lastCol) then --0111x
+								tmpTable(lastRow-i)(lastCol) := '1';
+								tmpTable(lastRow-i - 1)(lastCol-1) := '1';
+								tmpTable(lastRow-i + 1)(lastCol+1) := '1';
+								if lastRow-i < 12 and lastCol < 5 and table(lastRow-i + 2)(lastCol+2) = table(lastRow-i)(lastCol) then --01111
+									tmpTable(lastRow-i + 2)(lastCol+2) := '1';
+								end if;
+							end if;
+							
+						elsif table(lastRow-i)(lastCol) = table(lastRow-i + 1)(lastCol+1) then --0011x
+							if lastRow-i < 12 and lastCol < 5 and table(lastRow-i+2)(lastCol+2) = table(lastRow-i)(lastCol) then --00111
+								tmpTable(lastRow-i)(lastCol) := '1';
+								tmpTable(lastRow-i + 1)(lastCol+1) := '1';
+								tmpTable(lastRow-i + 2)(lastCol+2) := '1';
+							end if;
+							
+						end if;
+						
+						-- '/' shape
+						if (lastRow-i > 1) and lastCol < 6 and table(lastRow-i - 1)(lastCol+1) = table(lastRow-i)(lastCol) then --x11xx
+							if lastRow-i > 2 and lastCol < 5 and table(lastRow-i - 2)(lastCol+2) = table(lastRow-i)(lastCol) then --111xx
+								tmpTable(lastRow-i)(lastCol) := '1';
+								tmpTable(lastRow-i - 1)(lastCol+1) := '1';
+								tmpTable(lastRow-i - 2)(lastCol+2) := '1';
+								if table(lastRow-i + 1)(lastCol-1) = table(lastRow-i)(lastCol) then --1111x
+									tmpTable(lastRow-i + 1)(lastCol-1) := '1';
+									if (lastRow-i < 12 and lastCol > 2 and table(lastRow-i + 2)(lastCol-2) = table(lastRow-i)(lastCol)) then --11111
+										tmpTable(lastRow-i + 2)(lastCol-2) := '1';
+									end if;
+								end if;
+							
+							
+							elsif table(lastRow-i + 1)(lastCol-1) = table(lastRow-i)(lastCol) then --0111x
+								tmpTable(lastRow-i)(lastCol) := '1';
+								tmpTable(lastRow-i - 1)(lastCol+1) := '1';
+								tmpTable(lastRow-i + 1)(lastCol-1) := '1';
+								if lastRow-i < 12 and lastCol > 2 and table(lastRow-i + 2)(lastCol-2) = table(lastRow-i)(lastCol) then --01111
+									tmpTable(lastRow-i + 2)(lastCol-2) := '1';
+								end if;
+							end if;
+							
+						elsif table(lastRow-i)(lastCol) = table(lastRow-i + 1)(lastCol-1) then --0011x
+							if lastRow-i < 12 and lastCol > 1 and table(lastRow-i+2)(lastCol-2) = table(lastRow-i)(lastCol) then --00111
+								tmpTable(lastRow-i)(lastCol) := '1';
+								tmpTable(lastRow-i + 1)(lastCol-1) := '1';
+								tmpTable(lastRow-i + 2)(lastCol-2) := '1';
+							end if;
+							
+						end if;
+						
+					end loop;
