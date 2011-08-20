@@ -1,0 +1,8 @@
+2,显示的bug
+3,任一个地方到底即输
+4,pause button
+5,斜消，二次消
+6,random factor
+7,cut animation
+8,score
+9,
